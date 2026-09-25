@@ -45,7 +45,14 @@ export class ProjectService {
   }
 
   async getDevelopers(): Promise<Developer[]> {
-    return this.developerModel.find().populate('projects').lean();
+    // return this.developerModel.find().populate('projects').lean();
+    return this.developerModel
+      .find()
+      .populate({
+        path: 'projects',
+        select: '-developers',
+      })
+      .lean();
   }
 
   async getProjects(): Promise<Project[]> {
